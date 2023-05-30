@@ -13,6 +13,8 @@ require('@/assets/js/js.js')
 require('@/assets/style/style.css')
 library.add(fas);
 
+
+
 createApp(App)
   .component("font-awesome-icon", FontAwesomeIcon)
   .use(router)
