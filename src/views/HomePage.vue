@@ -1,5 +1,5 @@
 <template>
-    <div >
+    <div  style="width: 100%;">
         <NavBar/>
         <Header/>
         <div class=""  >
@@ -81,8 +81,8 @@
                             </div>  
                         </div>
                     </div>
-                    <div class="hero-infos row col-6">
-                        <div class="hero-info col-6 col-lg-12">
+                    <div class="hero-infos row  col-6">
+                        <div class="hero-info col-sm-6 col-md-12">
                             <div>
                                 <div class="d-flex align-items-center mb-3">
                                     <div class="custom-info-icon">
@@ -93,7 +93,7 @@
                                 <h5>Access to your profile with your personal address: unit.link/my-name</h5>
                             </div>
                         </div>
-                        <div class="hero-info col-6 col-lg-12">
+                        <div class="hero-info col-sm-6 col-md-12">
                             <div>
                                 <div class="d-flex align-items-center mb-3">
                                     <div class="custom-info-icon">
@@ -104,7 +104,7 @@
                                 <h5>Create as many links as you want (website, social profile, phone number, email ...).</h5>
                             </div>
                         </div>
-                        <div class="hero-info col-6 col-lg-12">
+                        <div class="hero-info col-sm-6 col-md-12">
                             <div>
                                 <div class="d-flex align-items-center mb-3">
                                     <div class="custom-info-icon">
@@ -115,7 +115,7 @@
                                 <h5>Organize your links by group for better visibility.</h5>
                             </div>
                         </div>
-                        <div class="hero-info col-6 col-lg-12">
+                        <div class="hero-info col-sm-6 col-md-12">
                             <div>
                                 <div class="d-flex align-items-center mb-3">
                                     <div class="custom-info-icon">
@@ -126,7 +126,7 @@
                                 <h5>Create a page that reflects your style.</h5>
                             </div>
                         </div>
-                        <div class="hero-info col-6 col-lg-12">
+                        <div class="hero-info col-sm-6 col-md-12">
                             <div>
                                 <div class="d-flex align-items-center mb-3">
                                     <div class="custom-info-icon">
@@ -288,5 +288,117 @@ font-size:medium ;
     color: white !important;
     font-size: medium !important;
     transform: rotate(-45deg);
+}
+@media only screen and (max-width: 992px){
+    .section-one h1{
+        font-size: 30px !important;
+}
+.section-one h5{
+    font-size: 20px !important;
+}
+.section-one a{
+    font-size: 20px !important;
+}
+.hero h2:first-child{
+    font-size: 32px;
+}
+.hero-info div div span{
+    font-size: x-large;
+}
+.hero-info div h5 {
+    font-size: large;
+}
+.custom-info-icon{
+    padding: 10px;
+}
+.custom-info-icon i{
+    font-size: small !important;
+}
+.phone{
+    width: 330px;
+
+}
+}
+@media only screen and (max-width: 785px){
+    
+    .phone-section{
+    width: 100%;
+}
+    .phone{
+    margin: auto;
+}
+.hero-section-one{
+    flex-direction: column;
+}
+.phone-section{
+    margin: auto;
+}
+.hero-infos {
+    width: 100%;
+    margin-top:50px;
+}
+.hero-info {
+    width: 50%;
+    margin-top: 15px;
+}
+.hero-info div h5 {
+    width: 100%;
+}
+}
+@media only screen and (max-width: 576px){
+    .section-one h1{
+        font-size: 25px !important;
+}
+.section-one h5{
+    font-size: 15px !important;
+}
+.section-one a{
+    font-size: 15px !important;
+}
+.hero h2:first-child{
+    font-size: 25px;
+}
+.hero-info div div span{
+    font-size: large;
+}
+.hero-info div h5 {
+    font-size: medium;
+}
+.custom-info-icon{
+    padding: 7px;
+}
+.custom-info-icon i{
+    font-size: x-small !important;
+}
+.phone{
+    width: 300px;
+
+}
+}
+@media only screen and (max-width: 576px){
+    
+    .section-one h1{
+        font-size: 22px !important;
+}
+.section-one h5{
+    font-size: 12px !important;
+}
+.section-one a{
+    font-size: 12px !important;
+}
+.hero h2:first-child{
+    font-size: 22px;
+}
+.hero-info div div span{
+    font-size: medium;
+}
+.hero-info div h5 {
+    font-size: small;
+}
+.custom-info-icon{
+    padding: 5px;
+}
+
+
 }
 </style>

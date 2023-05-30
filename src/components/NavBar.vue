@@ -1,7 +1,7 @@
 <template   >
 
 
-    <v-layout style="position: fixed !important,top:0;">
+    <v-layout style="position: fixed !important,top:0;width: 100%;">
         <v-navigation-drawer
         style="z-index: 1010;position: fixed !important;top:0;"
         v-model="this.$store.state.nav_bar"
