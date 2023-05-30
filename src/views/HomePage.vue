@@ -142,6 +142,7 @@
              </div>
             </div>
         </div>
+        <Foter/>
     </div>
 </template>
   
@@ -151,6 +152,7 @@
   // Components
   import NavBar from '../components/NavBar.vue';
   import Header from '../components/Header.vue';
+  import Foter from '../components/Foter.vue';
   
   export default defineComponent({
     name: 'HomePage',
@@ -164,6 +166,7 @@
     components: {
     NavBar,
     Header,
+    Foter,
     },
   });
   </script>
