@@ -1,6 +1,6 @@
 <template>
 <div>
-    <v-app-bar id="header" :elevation="3" style="position: fixed;">
+    <v-app-bar id="header" :elevation="3" style="position: fixed;" :style="backgroundColor">
         <v-btn  icon="fa-solid fa-user"  @click=" this.$store.state.nav_bar =!this.$store.state.nav_bar"  id="header-user-icon" size="small"></v-btn>
         <template v-slot:append >
             <div class="">
@@ -22,10 +22,12 @@ export default defineComponent({
     name: 'NavBar',
     data () {
       return {
-        
+
       }
     },
-
+    props: {
+        backgroundColor: String
+    },
     components: {
     //   HelloWorld,
     },

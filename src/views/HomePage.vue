@@ -12,10 +12,10 @@
                <h5 class="white-color pt-1">Create your profile, add your links and share your Paris.Link</h5>
                <a class="white-color pt-1">paris.link/my-name</a>
                <div class="section-one-btns">
-                <v-btn  prepend-icon="fa-solid fa-user-plus" variant="tonal">
+                <v-btn  @click="this.$router.push({ name: 'SignUp' })"  prepend-icon="fa-solid fa-user-plus" variant="tonal">
                     Sign Up
                 </v-btn>
-                <v-btn prepend-icon="fa-solid fa-arrow-right-to-bracket" variant="outlined">
+                <v-btn @click="this.$router.push({ name: 'SignIn' })" prepend-icon="fa-solid fa-arrow-right-to-bracket" variant="outlined">
                     Sign In
                 </v-btn>
                </div>
