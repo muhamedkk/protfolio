@@ -33,7 +33,6 @@
         color: white;
         font-size: small !important;
         margin: 0;
-        
     }
     </style>
     

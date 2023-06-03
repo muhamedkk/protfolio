@@ -9,3 +9,36 @@
 .white-color{
     color: white;
 }
+.primary-button{
+    background-color: #f58634 !important;
+    color: white !important;
+}
+.sppiner {
+    border: 3px solid #f5843477;
+    border-top-color: #f58634;
+    border-radius: 50%;
+    width: 2.2em;
+    height: 2.2em;
+    animation: spin 1s linear infinite;
+  }
+  
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+
+.modal-content{
+    background-color: #252525;
+}
+.modal-body{
+    color: white;
+    border: none;
+}
+.modal-footer{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    
+}

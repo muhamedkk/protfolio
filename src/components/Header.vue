@@ -4,7 +4,7 @@
         <v-btn  icon="fa-solid fa-user"  @click=" this.$store.state.nav_bar =!this.$store.state.nav_bar"  id="header-user-icon" size="small"></v-btn>
         <template v-slot:append >
             <div class="">
-                <img :src="require('../assets/images/logos/paris_teknoloji.png')" height="65" alt="">
+                <img style="cursor:pointer" :src="require('../assets/images/logos/paris_teknoloji.png')" height="65" alt=""  @click="this.$router.push({ name: 'HomePage' })">
             </div>
         </template>
     </v-app-bar>
@@ -50,6 +50,10 @@ padding: 0 32px;
 }
 .v-toolbar__append{
     margin-right: 0 !important;
+}
+.v-app-bar.v-toolbar:not(.v-toolbar--flat){
+    /* box-shadow: inset !important; */
+    box-shadow: 0px 2px 1px 0px rgba(0, 0, 0, 0.2) !important;
 }
 </style>
 

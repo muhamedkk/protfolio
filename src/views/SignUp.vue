@@ -11,7 +11,7 @@
                 <div class="input">
                     <v-text-field
                         v-model="prfile_name"
-                        
+                        :rules="[rules.required]"
                         color="#f58634"
                         label="Profile Name"
                         variant="underlined"
@@ -20,10 +20,12 @@
                 <div class="input">
                     <v-text-field
                         v-model="link"
+                        :rules="[rules.required]"
                         prefix="paris.link/"
                         color="#f58634"
                         label="Link"
                         variant="underlined"
+                        hint="At least 8 characters"
                     ></v-text-field>
                 </div>
                 <div class="input">
@@ -32,7 +34,7 @@
                         color="#f58634"
                         label="Email"
                         variant="underlined"
-                        :rules="[rules.email]"
+                        :rules="[rules.email,rules.required]"
                     ></v-text-field>
                 </div>
                 <div class="input">
@@ -44,12 +46,12 @@
                         variant="underlined"
                         @click:append="show2 = !show2"
                         :append-icon="show2 ? 'fa-regular fa-eye-slash' : 'fa-regular fa-eye' "
-                        :rules="[rules.required, rules.min]"
-                        hint="At least 8 characters"
+                        :rules="[rules.required]"
+                        
                         name="input-10-1"
                     ></v-text-field>
                 </div>
-                <div class="input">
+                <div class="input" id="re_pass">
                     <v-text-field
                         v-model="re_password"
                         :type="show3 ? 'text' : 'password'"
@@ -58,30 +60,52 @@
                         variant="underlined"
                         @click:append="show3 = !show3"
                         :append-icon="show3 ? 'fa-regular fa-eye-slash' : 'fa-regular fa-eye' "
-                        :rules="[rules.required, rules.min]"
-                        hint="At least 8 characters"
+                        :rules="[rules.required]"
                         name="input-10-1"
                     ></v-text-field>
                 </div>
                 <div class="mt-5">
-                <v-btn id="sign-up-btn"  @click="this.$router.push({ name: 'SignUp' }),val()"  prepend-icon="fa-solid fa-user-plus" variant="tonal">
+                <v-btn id="sign-up-btn" v-if="!this.signub_sppiner"  @click="sign_up()"  prepend-icon="fa-solid fa-user-plus" variant="tonal">
                     Sign Up
                 </v-btn>
+                <div v-else class="d-flex justify-content-center align-items-center">
+                      <div  class="sppiner"></div>
+                  </div>
                 </div>
                 <div class="text-center mt-3">
-                    <a style="color: #f58634;"  @click="this.$router.push({ name: 'SignIn' })">Already have an account? Sign in</a>
+                    <a style="color: #f58634;cursor:pointer;"  @click="this.$router.push({ name: 'SignIn' })">Already have an account? Sign in</a>
                 </div>
             </div>
         </div>
     </div>
     <Foter/>
+
+<button type="button" id="sign_up_modal" hidden data-bs-toggle="modal" data-bs-target="#sign-up-modal">
+</button>
+<!-- Modal -->
+<div class="modal fade" id="sign-up-modal" tabindex="-1"  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-body py-5 text-center">
+        {{response_message}}
+      </div>
+      <div class="modal-footer">
+        <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
+        <v-btn  class='primary-button' style="width: 100%;" data-bs-dismiss="modal"  prepend-icon="fa-solid fa-user-plus" variant="tonal">
+                    Close
+        </v-btn>
+      </div>
+    </div>
+  </div>
+</div>
+
   </div>
 </template>
 
  <script>
   import { defineComponent } from 'vue';
-  
-  // Components
+  /* eslint-disable */  import functions from  "../assets/js/js.js";
+  import _axios from '../axios'
   import NavBar from '../components/NavBar.vue';
   import Header from '../components/Header.vue';
   import Foter from '../components/Foter.vue';
@@ -95,7 +119,8 @@
         email:'',
         password:'',
         re_password:'',
-
+        response_message:'',
+        signub_sppiner:false,
         show1: true,
         show2: false,
         show3: false,
@@ -112,11 +137,48 @@
         },
     }),
     methods:{
-        val(){
-            var v = document.getElementById('input-14-messages')
-            v.innerText='coustom validation'
-            v.style.color='#B00020'
-            v.style.opacity=1
+        validations(){
+            var valid = true 
+            if(this.prfile_name.length <= 0 || this.link <= 0 || this.email <= 0 || this.password <= 0 || this.re_password <= 0  ){
+                valid = false
+            }
+            if( !this.email.includes('@') ){
+                console.log("email invalid")
+                valid = false
+            }
+            if(this.re_password !== this.password){
+                functions.get_valid_message('re_pass','conferm password not like password','rgb(176,0,32)')
+                valid = false
+            }
+            return valid
+        },
+        sign_up(){
+            var _link = this.link = this.link.trim().replace(/\s+/g,'-')
+            console.log(this.validations())
+            if(this.validations()){
+                this.signub_sppiner = true
+                var payload = {
+                    name:this.prfile_name,
+                    link_name:_link,
+                    email:this.email,
+                    password:this.password,
+                    is_active:true,
+                }
+                setTimeout(function(){
+                    _axios.post('/sign_up',payload)
+                    .then(response => {
+                        window.localStorage['token'] = response.data.token
+                        this.signub_sppiner = false
+                        this.$router.push({ name: 'AccountProfile' })
+                    })
+                    .catch(error => {
+                        console.error(error.response.data);
+                        this.response_message = error.response.data.detail
+                        document.getElementById('sign_up_modal').click()
+                        this.signub_sppiner = false
+                    });
+                }.bind(this), 1000);
+            }
         }
     },
     watch: {
@@ -131,13 +193,15 @@
   </script>
 
 <style scoped>
-.body{
-    padding: 32px;
-    background-color: #f58634;
-
-}
+  .body{
+      padding: 32px;
+      background-color: #f58634;
+      min-height: calc(100vh - (64px + 75px));
+        display: flex;
+        align-items: center;
+  }
 .bord{
-    max-width: 510px;
+    width: 510px;
     background-color: white;
     margin: auto;
     border-radius: 7px;

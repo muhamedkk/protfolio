@@ -1,10 +1,7 @@
-// window.addEventListener('scroll', function() {
-//     if(window.scrollY>20){
-//         console.log('====')
-//         document.querySelector('#header').style.position='fixed'
-//         document.querySelector('#header').style.top='0'
-//     }else{
-//         document.querySelector('#header').style.position='relative'
-//         document.querySelector('#header').style.top='0'
-//     }
-// });
+var get_valid_message =  function get_valid_message(id,text,color){
+    var message = document.querySelector(`#${id}`).querySelector('.v-input__details')
+    message.innerHTML = text
+    message.style.color= color
+    console.log(message)
+}
+export default {get_valid_message}

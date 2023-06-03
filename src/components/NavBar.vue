@@ -13,8 +13,8 @@
             ></v-list-item>
             <v-divider></v-divider>
             <v-list density="compact" nav>
-                <v-list-item prepend-icon="fa-solid fa-user-plus" title="Sign Up" value="2"></v-list-item>
-                <v-list-item  prepend-icon="fa-solid fa-arrow-right-to-bracket" title="Sign In" value="1"></v-list-item>
+                <v-list-item prepend-icon="fa-solid fa-user-plus" title="Sign Up" value="2" class="navbar_btn"  @click="this.$router.push({ name: 'SignUp' })"></v-list-item>
+                <v-list-item  prepend-icon="fa-solid fa-arrow-right-to-bracket" title="Sign In" value="1"  class="navbar_btn"  @click="this.$router.push({ name: 'SignIn' })"></v-list-item>
             </v-list>
         </v-navigation-drawer>
 
@@ -56,5 +56,11 @@ font-weight: inherit !important;
 .v-divider.v-theme--light{
     margin: 10px 0 !important;
 }
+.navbar_btn .v-list-item__prepend .v-icon{
+    color:#f58634 !important;
+    opacity: 1;
+}
 </style>
+
+
 
