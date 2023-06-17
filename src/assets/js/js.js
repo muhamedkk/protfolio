@@ -5,3 +5,4 @@ var get_valid_message =  function get_valid_message(id,text,color){
     console.log(message)
 }
 export default {get_valid_message}
+console.log(location.hostname)

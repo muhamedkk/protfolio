@@ -5,7 +5,7 @@
       <div class="body">
           <div class="bord">
               <div class="bord-header">
-                  <h5>Sign In</h5>
+                  <h5>Reset password</h5>
               </div>
               <div class="bord-body">
                   <div class="input">
@@ -13,49 +13,39 @@
                           v-model="email"
                           color="#f58634"
                           label="Email"
+                          placeholder="Email Address Of Acuuont"
                           variant="underlined"
                           :rules="[rules.email,rules.required]"
                       ></v-text-field>
                   </div>
-                  <div class="input">
-                      <v-text-field
-                          v-model="password"
-                          :type="show2 ? 'text' : 'password'"
-                          color="#f58634"
-                          label="Password"
-                          variant="underlined"
-                          @click:append="show2 = !show2"
-                          :append-icon="show2 ? 'fa-regular fa-eye-slash' : 'fa-regular fa-eye' "
-                          :rules="[rules.required]"
-                          name="input-10-1"
-                      ></v-text-field>
+                  <div class="">
+                    <p class="how-text mt-3">Click on Send to obtain by email the link to reset your password.</p>
                   </div>
 
-                  <div class="mt-5">
-                  <v-btn v-if="!login_sppiner" id="sign-up-btn"  @click="sign_up()"  prepend-icon="fa-solid fa-user-plus" variant="tonal">
-                      Sign In
+                  <div class="mt-3">
+                  <v-btn v-if="!login_sppiner" id="sign-up-btn"  @click="sign_up()"  prepend-icon="fa-regular fa-paper-plane" variant="tonal">
+                      Send
                   </v-btn>
                   <div v-else class="d-flex justify-content-center align-items-center">
                       <div  class="sppiner"></div>
                   </div>
-                  <hr>
-                  </div>
-                  <div class="text-center mt-3 d-flex justify-content-around">
-                      <a style="color: #f58634;;cursor:pointer;"  @click="this.$router.push({ name: 'SignUp' })">Create an account</a>
-                      <a style="color: #f58634;;cursor:pointer;"  @click="this.$router.push({ name: 'ForgotPassword' })">Forgot password?</a>
                   </div>
               </div>
           </div>
       </div>
       <Foter/>
 
-<button type="button" id="sign_in_modal" hidden data-bs-toggle="modal" data-bs-target="#sign-in-modal">
+<button type="button" id="forgat_modalbtn" hidden data-bs-toggle="modal" data-bs-target="#forgat-modal">
 </button>
 <!-- Modal -->
-<div class="modal fade" id="sign-in-modal" tabindex="-1"  aria-hidden="true">
+<div class="modal fade" id="forgat-modal" tabindex="-1"  aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
-      <div class="modal-body py-5 text-center">
+        <div class="d-flex justify-content-center align-items-center p-3 pt-4">
+            <i v-if="response_type === 'true'" style="color: green;font-size: 50px;" class="fa-solid fa-circle-check response-icon-true"></i>
+            <i v-else-if="response_type === 'false'" class="fa-solid fa-circle-xmark response-icon-erorr"></i>
+        </div>
+      <div class="modal-body py-2 text-center">
         {{response_message}}
       </div>
       <div class="modal-footer">
@@ -69,7 +59,6 @@
 </div>
     </div>
   </template>
-  
    <script>
     import { defineComponent } from 'vue';
     import _axios from '../axios'
@@ -84,10 +73,10 @@
           backgroundColor:'background-color:#252525',
           login_sppiner:false,
           email:'',
-          password:'',
           show2: false,
           show3: false,
           response_message:'',
+          response_type:'',
           rules: {
             required: value => !!value || 'Required.',
             min: v => v.length >= 8 || 'Min 8 characters',
@@ -101,7 +90,7 @@
       methods:{
         validations(){
             var valid = true 
-            if(this.email <= 0 || this.password <= 0 ){
+            if(this.email <= 0  ){
                 valid = false
             }
             if( !this.email.includes('@') ){
@@ -114,19 +103,22 @@
             if(this.validations()){
                 var payload = {
                     email:this.email,
-                    password:this.password,
                 }
                 this.login_sppiner = true
                 setTimeout(function(){
-                    _axios.post('/api/login',payload)
+                    _axios.post('/api/forgot',payload)
                     .then(response => {
-                        window.localStorage['token'] = response.data.token
+                        response
                         this.login_sppiner = false
-                        this.$router.push({ name: 'AccountProfile' })
+                        this.response_type = 'true'
+                        this.response_message = 'Email to reset password sent successfully'
+                        document.getElementById('forgat_modalbtn').click()
+                        // this.$router.push({ name: 'AccountProfile' })
                     })
                     .catch(error => {
                         this.response_message = error.response.data.detail
-                        document.getElementById('sign_in_modal').click()
+                        document.getElementById('forgat_modalbtn').click()
+                        this.response_type = 'false'
                         this.login_sppiner = false
                     });
                 }.bind(this), 1000);
@@ -172,6 +164,8 @@
   .v-field__input{
       color: #252525 !important;
   }
-  
+  .how-text{
+    font-size: small;
+  }
   </style>
   

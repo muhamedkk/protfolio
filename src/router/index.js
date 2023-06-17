@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
 import HomePage from '../views/HomePage.vue'
 import SignUp from '../views/SignUp.vue'
 import SignIn from '../views/SignIn.vue'
@@ -8,6 +7,11 @@ import Links from '../views/Links.vue'
 import DesignPage from '../views/DesignPage.vue'
 import Share from '../views/Share.vue'
 import Preview from '../views/Preview.vue'
+import Protfolio from '../views/Protfolio.vue'
+import ForgotPassword from '../views/ForgotPassword.vue'
+import ResetPassword from '../views/ResetPassword.vue'
+import ActivateAcouunt from '../views/ActivateAcouunt.vue'
+import _404page from '../views/_404page.vue'
 
 const routes = [
   {
@@ -51,9 +55,35 @@ const routes = [
     component: Preview
   },
   {
-    path: '/x',
-    name: 'home',
-    component: HomeView
+    path: '/reset-password/:token',
+    name: 'ResetPassword',
+    component: ResetPassword
+  },
+  {
+    path: `/:Protfolio`,
+    name: 'Protfolio',
+    component: Protfolio
+  },
+  {
+    path: `/ForgotPassword`,
+    name: 'ForgotPassword',
+    component: ForgotPassword
+  },
+  {
+    path: `/activate-acouunt/:token`,
+    name: 'ActivateAcouunt',
+    component: ActivateAcouunt
+  },
+
+  { 
+    path: '/:catchAll(.*)',
+    name: 'NotFound',
+    component: _404page 
+  },
+  { 
+    path: '/NotFound',
+    name: 'NotFoundd',
+    component: _404page 
   },
 ]
 

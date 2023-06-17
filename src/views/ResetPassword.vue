@@ -5,16 +5,20 @@
       <div class="body">
           <div class="bord">
               <div class="bord-header">
-                  <h5>Sign In</h5>
+                  <h5>New password</h5>
               </div>
               <div class="bord-body">
                   <div class="input">
-                      <v-text-field
-                          v-model="email"
+                    <v-text-field
+                          v-model="password_re"
+                          :type="show1 ? 'text' : 'password'"
                           color="#f58634"
-                          label="Email"
+                          label="Password"
                           variant="underlined"
-                          :rules="[rules.email,rules.required]"
+                          @click:append="show1 = !show1"
+                          :append-icon="show1 ? 'fa-regular fa-eye-slash' : 'fa-regular fa-eye' "
+                          :rules="[rules.required]"
+                          name="input-10-1"
                       ></v-text-field>
                   </div>
                   <div class="input">
@@ -22,7 +26,7 @@
                           v-model="password"
                           :type="show2 ? 'text' : 'password'"
                           color="#f58634"
-                          label="Password"
+                          label="confirm your pass"
                           variant="underlined"
                           @click:append="show2 = !show2"
                           :append-icon="show2 ? 'fa-regular fa-eye-slash' : 'fa-regular fa-eye' "
@@ -31,42 +35,20 @@
                       ></v-text-field>
                   </div>
 
-                  <div class="mt-5">
-                  <v-btn v-if="!login_sppiner" id="sign-up-btn"  @click="sign_up()"  prepend-icon="fa-solid fa-user-plus" variant="tonal">
-                      Sign In
+                  <div class="mt-3">
+                  <v-btn v-if="!login_sppiner" id="sign-up-btn"  @click="sign_up()"  prepend-icon="fa-solid fa-floppy-disk" variant="tonal">
+                      Save
                   </v-btn>
                   <div v-else class="d-flex justify-content-center align-items-center">
                       <div  class="sppiner"></div>
                   </div>
-                  <hr>
-                  </div>
-                  <div class="text-center mt-3 d-flex justify-content-around">
-                      <a style="color: #f58634;;cursor:pointer;"  @click="this.$router.push({ name: 'SignUp' })">Create an account</a>
-                      <a style="color: #f58634;;cursor:pointer;"  @click="this.$router.push({ name: 'ForgotPassword' })">Forgot password?</a>
                   </div>
               </div>
           </div>
       </div>
       <Foter/>
 
-<button type="button" id="sign_in_modal" hidden data-bs-toggle="modal" data-bs-target="#sign-in-modal">
-</button>
-<!-- Modal -->
-<div class="modal fade" id="sign-in-modal" tabindex="-1"  aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-body py-5 text-center">
-        {{response_message}}
-      </div>
-      <div class="modal-footer">
-        <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
-        <v-btn  class='primary-button' style="width: 100%;" data-bs-dismiss="modal"  prepend-icon="fa-solid fa-user-plus" variant="tonal">
-                    Close
-        </v-btn>
-      </div>
-    </div>
-  </div>
-</div>
+
     </div>
   </template>
   
@@ -85,8 +67,9 @@
           login_sppiner:false,
           email:'',
           password:'',
+          password_re:'',
           show2: false,
-          show3: false,
+          show1: false,
           response_message:'',
           rules: {
             required: value => !!value || 'Required.',
@@ -101,11 +84,10 @@
       methods:{
         validations(){
             var valid = true 
-            if(this.email <= 0 || this.password <= 0 ){
+            if(this.password <= 0 || this.password_re <= 0 ){
                 valid = false
             }
-            if( !this.email.includes('@') ){
-                console.log("email invalid")
+            if(this.password !== this.password_re){
                 valid = false
             }
             return valid
@@ -113,26 +95,40 @@
           sign_up(){
             if(this.validations()){
                 var payload = {
-                    email:this.email,
                     password:this.password,
+                    token:this.$route.params.token
                 }
+                console.log(payload)
                 this.login_sppiner = true
+                _axios
                 setTimeout(function(){
-                    _axios.post('/api/login',payload)
+                    _axios.post('/api/reset_pass',payload)
                     .then(response => {
+                        console.log(response)
                         window.localStorage['token'] = response.data.token
                         this.login_sppiner = false
                         this.$router.push({ name: 'AccountProfile' })
                     })
                     .catch(error => {
                         this.response_message = error.response.data.detail
-                        document.getElementById('sign_in_modal').click()
                         this.login_sppiner = false
                     });
                 }.bind(this), 1000);
             }
           },
       },
+      beforeCreate(){
+        var payload=  {token:this.$route.params.token}
+        _axios.post('/api/check_reset',payload)
+                    .then(response => {
+                        console.log(response)
+                    })
+                    .catch(error => {
+                        error
+                        this.$router.push({ name: 'NotFoundd' })
+                    });
+    },
+
       watch: {
   
       },

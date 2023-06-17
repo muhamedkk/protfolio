@@ -1,7 +1,7 @@
 <template>
   <div>
     <NavBar />
-    <Header :backgroundColor="backgroundColor" />
+    <Header :backgroundColor="backgroundColor"  :image-src="require('../assets/images/logos/paris_teknoloji.png')" />
     <div class="body">
         <div class="bord">
             <div class="bord-header">
@@ -10,22 +10,21 @@
             <div class="bord-body">
                 <div class="input">
                     <v-text-field
+                        v-model="link"
+                        :rules="[rules.required]"
+                        color="#f58634"
+                        label="Link"
+                        variant="underlined"
+                        hint="At least 8 characters"
+                    ></v-text-field>
+                </div>
+                <div class="input">
+                    <v-text-field
                         v-model="prfile_name"
                         :rules="[rules.required]"
                         color="#f58634"
                         label="Profile Name"
                         variant="underlined"
-                    ></v-text-field>
-                </div>
-                <div class="input">
-                    <v-text-field
-                        v-model="link"
-                        :rules="[rules.required]"
-                        prefix="paris.link/"
-                        color="#f58634"
-                        label="Link"
-                        variant="underlined"
-                        hint="At least 8 characters"
                     ></v-text-field>
                 </div>
                 <div class="input">
@@ -99,6 +98,28 @@
   </div>
 </div>
 
+<button type="button" id="sign_up" hidden data-bs-toggle="modal" data-bs-target="#sign-up">
+</button>
+<!-- Modal -->
+<div class="modal fade" id="sign-up" tabindex="-1"  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+    <div class="d-flex justify-content-center align-items-center p-3 pt-4">
+        <i style="color: green;font-size: 50px;" class="fa-solid fa-circle-check response-icon-true"></i>
+    </div>
+      <div class="modal-body py-2 text-center">
+        {{response_message}}
+      </div>
+      <div class="modal-footer">
+        <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
+        <v-btn @click="this.$router.push({ name: 'SignIn' })" class='primary-button' style="width: 100%;" data-bs-dismiss="modal"  prepend-icon="fa-solid fa-user-plus" variant="tonal">
+                    Done
+        </v-btn>
+      </div>
+    </div>
+  </div>
+</div>
+
   </div>
 </template>
 
@@ -114,6 +135,7 @@
     name: 'HomePage',
     data: () => ({
         backgroundColor:'background-color:#252525',
+        image:'../assets/images/logos/paris_teknoloji.png',
         prfile_name:'',
         link:'',
         email:'',
@@ -159,17 +181,19 @@
                 this.signub_sppiner = true
                 var payload = {
                     name:this.prfile_name,
-                    link_name:_link,
+                    link_name:_link.toLowerCase(),
                     email:this.email,
                     password:this.password,
                     is_active:true,
                 }
                 setTimeout(function(){
-                    _axios.post('/sign_up',payload)
+                    _axios.post('/api/sign_up',payload)
                     .then(response => {
-                        window.localStorage['token'] = response.data.token
+                        this.response_message = 'Sended Email To Activate'
+                        document.getElementById('sign_up').click()
                         this.signub_sppiner = false
-                        this.$router.push({ name: 'AccountProfile' })
+                        // window.localStorage['token'] = response.data.token
+                        // this.$router.push({ name: 'AccountProfile' })
                     })
                     .catch(error => {
                         console.error(error.response.data);
@@ -182,13 +206,15 @@
         }
     },
     watch: {
-
+        link:function(value){
+            this.prfile_name = value
+        }
     },
     components: {
     NavBar,
     Header,
     Foter,
-    },
+    }, 
   });
   </script>
 

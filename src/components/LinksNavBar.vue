@@ -1,5 +1,6 @@
 <template>
-  <div>
+    <div>
+  <div style="position: fixed;width: 100%;z-index: 900;">
     <router-view/>
     <v-bottom-navigation :elevation="1" style="position: relative;">
         
@@ -43,6 +44,8 @@
     </router-link>
 </v-bottom-navigation>
   </div>
+  <div style="height: 60px;"></div>
+</div>
 </template>
 
 

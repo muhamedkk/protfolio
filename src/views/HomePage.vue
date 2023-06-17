@@ -1,7 +1,7 @@
 <template>
     <div  style="width: 100%;">
         <NavBar/>
-        <Header/>
+        <Header :image-src="require('../assets/images/logos/paris teknoloji.png')" />
         <div class=""  >
            <div class="section-one">
                <v-img
@@ -9,31 +9,31 @@
                src="../assets/images/logos/paris_teknoloji.png"  
                ></v-img>
                <h1 class="white-color pt-1">One link for all your links</h1>
-               <h5 class="white-color pt-1">Create your profile, add your links and share your Paris.Link</h5>
-               <a class="white-color pt-1">paris.link/my-name</a>
+               <h5 class="white-color pt-1">Create your profile, add your links and share your Parisajans.Link</h5>
+               <a class="white-color pt-1">Parisajans.link/my-name</a>
                <div class="section-one-btns">
                 <v-btn  @click="this.$router.push({ name: 'SignUp' })"  prepend-icon="fa-solid fa-user-plus" variant="tonal">
                     Sign Up
                 </v-btn>
-                <v-btn @click="this.$router.push({ name: 'SignIn' })" prepend-icon="fa-solid fa-arrow-right-to-bracket" variant="outlined">
+                <v-btn @click="sign_in()" prepend-icon="fa-solid fa-arrow-right-to-bracket" variant="outlined">
                     Sign In
                 </v-btn>
                </div>
             </div>
             <div class="hero">
-             <h2>A simple and easy way to create a landing page for all your links</h2>
+             <h2 >A simple and easy way to create a landing page for all your links</h2>
              <div class="hero-sections mt-5">
                     <div class="hero-section-one row justify-content-center">
                         <div class="phone-section col-6">
                         <div class="phone ">
                             <div class="phone-header d-flex justify-content-center align-items-center flex-column ">
                                 <img class="mb-2" :src="require('../assets/images/logos/paris_teknoloji.png')" height="65" alt="">
-                                <h6 class="m-0"><strong>Paris.Link</strong></h6>
+                                <h6 class="m-0"><strong>Parisajans.Link</strong></h6>
                                 <p style="font-size:12px;">One Link for all your Links</p>
                             </div>
                             <div class="phone-info_section">
                                 <div class="phone-info_section-titel">
-                                    <p class="m-0">Paris.Link</p>
+                                    <p class="m-0">Parisajans.Link</p>
                                     <hr class="m-0">
                                 </div>
                                 <div class="phone-infos">
@@ -159,7 +159,15 @@
     data: () => ({
      
     }),
-
+    methods:{
+        sign_in(){
+            if(window.localStorage.token){
+                this.$router.push({ name: 'AccountProfile' })
+            }else{
+                this.$router.push({ name: 'SignIn' })
+            }
+        }
+    },
     watch: {
 
     },
@@ -225,7 +233,7 @@ flex-direction: column;
 .hero h2:first-child{
     text-align: center;
     color: #252525;
-    font-size: 44px;
+    font-size: 30px;
 }
 .phone-section{
     
@@ -300,7 +308,7 @@ font-size:medium ;
     font-size: 20px !important;
 }
 .hero h2:first-child{
-    font-size: 32px;
+    font-size: 25px;
 }
 .hero-info div div span{
     font-size: x-large;
@@ -356,7 +364,7 @@ font-size:medium ;
     font-size: 15px !important;
 }
 .hero h2:first-child{
-    font-size: 25px;
+    font-size: 20px;
 }
 .hero-info div div span{
     font-size: large;
@@ -387,7 +395,7 @@ font-size:medium ;
     font-size: 12px !important;
 }
 .hero h2:first-child{
-    font-size: 22px;
+    font-size: 15px;
 }
 .hero-info div div span{
     font-size: medium;

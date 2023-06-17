@@ -7,14 +7,22 @@
         v-model="this.$store.state.nav_bar"
         temporary
         >
-        <v-list-item
-            prepend-avatar="https://randomuser.me/api/portraits/men/78.jpg"
-            title="John Leider"
+
+        <v-list-item v-if="this.$store.state.user_informations.name"
+            :prepend-avatar="this.$store.state.user_informations.photo"
+            :title="this.$store.state.user_informations.name"
             ></v-list-item>
             <v-divider></v-divider>
             <v-list density="compact" nav>
-                <v-list-item prepend-icon="fa-solid fa-user-plus" title="Sign Up" value="2" class="navbar_btn"  @click="this.$router.push({ name: 'SignUp' })"></v-list-item>
-                <v-list-item  prepend-icon="fa-solid fa-arrow-right-to-bracket" title="Sign In" value="1"  class="navbar_btn"  @click="this.$router.push({ name: 'SignIn' })"></v-list-item>
+                <v-list-item v-if="!this.$store.state.user_informations.name" prepend-icon="fa-solid fa-user-plus" title="Sign Up" value="2" class="navbar_btn"  @click="this.$router.push({ name: 'SignUp' })"></v-list-item>
+                <v-list-item v-if="!this.$store.state.user_informations.name" prepend-icon="fa-solid fa-arrow-right-to-bracket" title="Sign In" value="1"  class="navbar_btn"  @click="sign_in()"></v-list-item>
+
+                <v-list-item v-if="this.$store.state.user_informations.name" prepend-icon="fa-solid fa-user" title="Profile" value="3"  class="navbar_btn"  @click="this.$router.push({ name: 'AccountProfile' })"></v-list-item>
+                <v-list-item v-if="this.$store.state.user_informations.name" prepend-icon="fa-solid fa-link" title="Links" value="4"  class="navbar_btn"  @click="this.$router.push({ name: 'Links' })"></v-list-item>
+                <!-- <v-list-item v-if="this.$store.state.user_informations.name" prepend-icon="fa-solid fa-pen-nib" title="Sign In" value="1"  class="navbar_btn"  @click="this.$router.push({ name: 'SignIn' })"></v-list-item> -->
+                <v-list-item v-if="this.$store.state.user_informations.name" prepend-icon="fa-solid fa-share-nodes" title="Share" value="6"  class="navbar_btn"  @click="this.$router.push({ name: 'Share' })"></v-list-item>
+                <v-list-item v-if="this.$store.state.user_informations.name" prepend-icon="fa-solid fa-eye" title="peview" value="7"  class="navbar_btn"  @click="this.$router.push({ name: 'Preview' })"></v-list-item>
+                <v-list-item v-if="this.$store.state.user_informations.name" prepend-icon="fa-solid fa-arrow-right-to-bracket" title="LogOut" value="8"  class="navbar_btn"  @click="logout()"></v-list-item>
             </v-list>
         </v-navigation-drawer>
 
@@ -30,10 +38,23 @@
     name: 'NavBar',
     data () {
       return {
- 
+        UserName:'Muhammed Karzoun',
       }
     },
-
+    methods:{
+        sign_in(){
+            if(window.localStorage.token){
+                this.$router.push({ name: 'AccountProfile' })
+            }else{
+                this.$router.push({ name: 'SignIn' })
+            }
+        },
+        logout(){
+        this.$store.state.user_informations = {}
+      this.$router.push({ name: 'HomePage' })
+      localStorage.removeItem('token');
+    },
+    },
     components: {
     //   HelloWorld,
     },
@@ -59,6 +80,7 @@ font-weight: inherit !important;
 .navbar_btn .v-list-item__prepend .v-icon{
     color:#f58634 !important;
     opacity: 1;
+    font-size: large;
 }
 </style>
 

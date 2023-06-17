@@ -1,28 +1,24 @@
 <template>
-  <div>
-    <NavBar />
-      <Header :backgroundColor="backgroundColor" :image-src="require('../assets/images/logos/paris teknoloji.png')" />
-      <LinksNavBar/>
-    <div class="body">
-      <div class="section-one">
-              <div class="my-photo">
-                  <div class="photo">
-                      <img v-if="this.$store.state.user_informations.photo" :src="this.$store.state.user_informations.photo"  alt=""  >
-                      <i  v-else class="fa-solid fa-user user-icon"></i>
-                  </div>
-              </div>
-              <div class="name-link">
-                  <h3>{{this.$store.state.user_informations.name}}</h3>
-                  <h4 v-if="this.$store.state.user_informations.show_descraption">{{this.$store.state.user_informations.descraption}}</h4>
-              </div>
-      </div>
-      <div class="links-section mt-3">
-          <div v-for="(group,i) in get_protfolio_link" :key="i" >            
-              <div v-if="group.link.length !== 0 && group.is_active" class="group">
-                  <div v-if="group.show_titel" class="group-header">
-                      <h6>{{group.titel}}</h6>
-                  </div>
-                  <div class="links">
+  <div v-if="JSON.parse(JSON.stringify(this.$store.state.user_informations)).is_enabled" class="body">
+    <div class="section-one">
+            <div class="my-photo">
+                <div class="photo">
+                    <img v-if="this.$store.state.user_informations.photo" :src="this.$store.state.user_informations.photo"  alt=""  >
+                    <i  v-else class="fa-solid fa-user user-icon"></i>
+                </div>
+            </div>
+            <div class="name-link">
+                <h3>{{this.$store.state.user_informations.name}}</h3>
+                <h4 v-if="this.$store.state.user_informations.show_descraption">{{this.$store.state.user_informations.descraption}}</h4>
+            </div>
+    </div>
+    <div class="links-section mt-3">
+        <div v-for="(group,i) in get_protfolio_link" :key="i" >        
+            <div v-if="group.link.length !== 0 && group.is_active" class="group">
+                <div v-if="group.show_titel" class="group-header">
+                    <h6>{{group.titel}}</h6>
+                </div>
+                <div class="links">
                         <div v-for="(link,c) in group.link" :key="c">
                             <div v-if="link.is_active" >
                             <a v-if="link.link_type === 'phone'"  target="_blank" :href="`tel:${link.link}`" class="link">
@@ -60,15 +56,15 @@
                             </a>
                             <a v-if="link.link_type === 'link'" target="_blank" :href="`${link.link}`" class="link">
                                     <div class="link-icon">
-                                      <i v-if="link.link_type === 'link' && link.link.indexOf('facebook.com') !== -1  " class="fa-brands fa-facebook"></i> 
+                                        <i v-if="link.link_type === 'link' && link.link.indexOf('facebook.com') !== -1  " class="fa-brands fa-facebook"></i> 
                                         <i v-else-if="link.link_type === 'link' && link.link.indexOf('instagram.com') !== -1  " class="fa-brands fa-instagram"></i> 
                                         <i v-else-if="link.link_type === 'link' && link.link.indexOf('linkedin.com') !== -1  " class="fa-brands fa-linkedin"></i> 
                                         <i v-else-if="link.link_type === 'link' && link.link.indexOf('telegram.com') !== -1  " class="fa-brands fa-telegram"></i> 
                                         <i v-else-if="link.link_type === 'link' && link.link.indexOf('snapchat.com') !== -1  " class="fa-brands fa-snapchat"></i> 
                                         <i v-else-if="link.link_type === 'link' && link.link.indexOf('tiktok.com') !== -1  " class="fa-brands fa-tiktok"></i> 
-                                      <i v-else-if="link.link_type === 'link' && link.link.indexOf('youtube.com') !== -1  " class="fa-brands fa-youtube"></i> 
-                                      <i v-else-if="link.link_type === 'link' && link.link.indexOf('twitter.com') !== -1  " class="fa-brands fa-twitter"></i> 
-                                      <i v-else-if="link.link_type === 'link' && link.link.indexOf('/maps/.com') !== -1  " class="fa-solid fa-location-dot"></i> 
+                                        <i v-else-if="link.link_type === 'link' && link.link.indexOf('youtube.com') !== -1  " class="fa-brands fa-youtube"></i> 
+                                        <i v-else-if="link.link_type === 'link' && link.link.indexOf('twitter.com') !== -1  " class="fa-brands fa-twitter"></i> 
+                                        <i v-else-if="link.link_type === 'link' && link.link.indexOf('/maps/.com') !== -1  " class="fa-solid fa-location-dot"></i> 
                                         <i v-else class="fa-solid fa-link"></i> 
                                 </div>
                                 <div class="link-text">
@@ -78,11 +74,16 @@
                         </div>
                     </div>
                 </div>
-              </div>
-          </div>
-      </div>
+            </div>
+        </div>
     </div>
-    <Foter/>
+        <div class="foter" style="position: fixed; bottom: 0px;width: 100%;height: 130px;display: flex;flex-direction: column;background-color:#f6f6f6;">
+                <img @click="$router.push({'name':'HomePage'})"  :src="require('../assets/images/logos/paris teknoloji.png')" style=" width: 150px; cursor: pointer;background-color: rgb(230 230 230);border-radius: 10px;padding: 10px;"  alt="">
+        </div>
+        <!-- <div class="foter" style="position: fixed; bottom: 0px;width: 100%;height: 130px;display: flex;flex-direction: column;">
+                <img @click="$router.push({'name':'HomePage'})"  :src="require('../assets/images/logos/paris_teknoloji.png')" style=" width: 150px; cursor: pointer;"  alt="">
+                <p class="m-0" style="color:white">Clilck To Start Your First Link</p>
+        </div> -->
   </div>
 </template>
 
@@ -90,37 +91,30 @@
 
 import { defineComponent } from 'vue';
 import { mapGetters } from 'vuex';
-import NavBar from '../components/NavBar.vue';
-import Header from '../components/Header.vue';
-import Foter from '../components/Foter.vue';
-import LinksNavBar from '../components/LinksNavBar.vue';
 export default defineComponent({
-    name: 'PreviewPage',
+    name: 'ProtfolioPage',
     data: () => ({
-      backgroundColor:'background-color:#ffffff',
+        backgroundColor:'background-color:#ffffff',
         user_links:'',
     }),
     methods:{
         get_data(){
             this.user_informations = JSON.parse(JSON.stringify(this.$store.state.user_informations))
         },
-        get_links(){
-            this.user_links = JSON.parse(JSON.stringify(this.$store.state.user_links))
-        },
+  
+        
     },
     components: {
-      NavBar,
-      Header,
-      Foter,
-      LinksNavBar,
-      },
-    created(){
-      this.$store.dispatch('user_info')
-
-        this.$store.dispatch('get_my_links')
-        .then( ()  => {
-            this.get_links()
+    },
+    beforeCreate(){
+        // this.$store.dispatch('user_info')
+        this.$store.dispatch('protifolio', this.$route.params.Protfolio)
+        .then( result  => {
+            result
+            this.get_data()
         })
+        this.$store.dispatch('get_links', this.$route.params.Protfolio)
+
     },
     computed:{
         ...mapGetters(['get_protfolio_link'])
@@ -130,10 +124,9 @@ export default defineComponent({
 
 
 <style scoped>
- .body{
-  min-height: calc(100vh - (64px + 56px + 57px));
+.body{
   background-color: #f6f6f6 ;
-  padding: 32px;
+  height: 100%;
 }
 .my-photo{
   display: flex;
@@ -155,8 +148,6 @@ export default defineComponent({
   width: 100%;
   height: 100%;
   border-radius: 50%;
-
-
 }
 .add-photo-btn{
   cursor:pointer;

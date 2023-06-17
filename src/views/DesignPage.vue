@@ -1,7 +1,7 @@
 <template>
     <div>
       <NavBar />
-      <Header :backgroundColor="backgroundColor" />
+      <Header :backgroundColor="backgroundColor" :image-src="require('../assets/images/logos/paris teknoloji.png')" />
       <LinksNavBar/>
       <div class="body">
       </div>

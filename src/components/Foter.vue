@@ -1,7 +1,7 @@
 <template>
     <div class="foter">
         <h5>
-            Paris.Link © 2023
+            Parisajans.Link © 2023
         </h5>
     </div>
 </template>

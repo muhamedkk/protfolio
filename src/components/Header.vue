@@ -4,7 +4,8 @@
         <v-btn  icon="fa-solid fa-user"  @click=" this.$store.state.nav_bar =!this.$store.state.nav_bar"  id="header-user-icon" size="small"></v-btn>
         <template v-slot:append >
             <div class="">
-                <img style="cursor:pointer" :src="require('../assets/images/logos/paris_teknoloji.png')" height="65" alt=""  @click="this.$router.push({ name: 'HomePage' })">
+                <img style="cursor:pointer" :src="imageSrc" height="65" alt=""  @click="this.$router.push({ name: 'HomePage' })">
+                <!-- <img style="cursor:pointer" :src="require('../assets/images/logos/paris_teknoloji.png')" height="65" alt=""  @click="this.$router.push({ name: 'HomePage' })"> -->
             </div>
         </template>
     </v-app-bar>
@@ -26,7 +27,11 @@ export default defineComponent({
       }
     },
     props: {
-        backgroundColor: String
+        backgroundColor: String,
+        imageSrc: {
+            type: String,
+            required: true
+  }
     },
     components: {
     //   HelloWorld,

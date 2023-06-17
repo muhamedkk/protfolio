@@ -3,6 +3,9 @@
 *{
     font-family: "Roboto", sans-serif;
 }
+body{
+    padding: 0px !important;
+}
 .p-color{
     color: #f58634;
 }

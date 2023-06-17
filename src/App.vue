@@ -9,6 +9,14 @@
 <script>
 
 export default {
+  head: {
+       link: [
+             {
+                 rel: "icon",
+                 href: require("../src/assets/images/logos/paris teknoloji.png")
+             },
+          ]
+       },
   name: 'App',
 
   data: () => ({
