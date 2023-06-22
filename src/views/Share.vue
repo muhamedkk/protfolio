@@ -49,7 +49,7 @@
         console.log(linke)
         // navigator.clipboard.writeText('linke')
           try {
-          await navigator.clipboard.writeText('sss');
+          await navigator.clipboard.writeText(linke);
           } catch (e) {
           console.log(e);
           }

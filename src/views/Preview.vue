@@ -17,13 +17,13 @@
               </div>
       </div>
       <div class="links-section mt-3">
-          <div v-for="(group,i) in get_protfolio_link" :key="i" >            
+          <div v-for="(group,i) in the_links" :key="i" >            
               <div v-if="group.link.length !== 0 && group.is_active" class="group">
                   <div v-if="group.show_titel" class="group-header">
                       <h6>{{group.titel}}</h6>
                   </div>
                   <div class="links">
-                        <div v-for="(link,c) in group.link" :key="c">
+                        <div v-for="(link,c) in group.link.sort((l ,ll) => l.order - ll.order )" :key="c">
                             <div v-if="link.is_active" >
                             <a v-if="link.link_type === 'phone'"  target="_blank" :href="`tel:${link.link}`" class="link">
                                     <div class="link-icon">
@@ -123,7 +123,15 @@ export default defineComponent({
         })
     },
     computed:{
-        ...mapGetters(['get_protfolio_link'])
+        ...mapGetters(['get_protfolio_link']),
+        the_links(){
+            try{
+                return this.get_protfolio_link.slice().sort((g ,gg) => g.order - gg.order ) 
+            }
+            catch{
+                return []
+            }
+        }
     }
   });
   </script>

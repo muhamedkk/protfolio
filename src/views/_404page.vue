@@ -1,10 +1,10 @@
 <template>
 <div class="body">
     <!-- <img :src="require('../assets/images/logos/paris_teknoloji.png')" alt=""> -->
-    <img src="http://parisajans.com.tr/img/paris%20teknoloji.ac93044b.png" alt="">
+    <img src="https://parisajans.link/img/paris%20teknoloji.23e86c4f.png" alt="">
     <h1>ERROR 404</h1>
     <p>Oops, this page does not exist!</p>
-    <a href="http://parisajans.com.tr/">Back to the homepage</a>
+    <a href="http://parisajans.link/">Back to the homepage</a>
 </div>
 </template>
 

@@ -1,4 +1,7 @@
 <template>
+    <div style="height: 100%;">
+
+
   <div v-if="JSON.parse(JSON.stringify(this.$store.state.user_informations)).is_enabled" class="body">
     <div class="section-one">
             <div class="my-photo">
@@ -13,13 +16,13 @@
             </div>
     </div>
     <div class="links-section mt-3">
-        <div v-for="(group,i) in get_protfolio_link" :key="i" >        
+        <div v-for="(group,i) in the_links" :key="i" >        
             <div v-if="group.link.length !== 0 && group.is_active" class="group">
                 <div v-if="group.show_titel" class="group-header">
                     <h6>{{group.titel}}</h6>
                 </div>
                 <div class="links">
-                        <div v-for="(link,c) in group.link" :key="c">
+                        <div v-for="(link,c) in group.link.sort((l ,ll) => l.order - ll.order )" :key="c">
                             <div v-if="link.is_active" >
                             <a v-if="link.link_type === 'phone'"  target="_blank" :href="`tel:${link.link}`" class="link">
                                     <div class="link-icon">
@@ -77,14 +80,16 @@
             </div>
         </div>
     </div>
-        <div class="foter" style="position: fixed; bottom: 0px;width: 100%;height: 130px;display: flex;flex-direction: column;background-color:#f6f6f6;">
-                <img @click="$router.push({'name':'HomePage'})"  :src="require('../assets/images/logos/paris teknoloji.png')" style=" width: 150px; cursor: pointer;background-color: rgb(230 230 230);border-radius: 10px;padding: 10px;"  alt="">
-        </div>
-        <!-- <div class="foter" style="position: fixed; bottom: 0px;width: 100%;height: 130px;display: flex;flex-direction: column;">
-                <img @click="$router.push({'name':'HomePage'})"  :src="require('../assets/images/logos/paris_teknoloji.png')" style=" width: 150px; cursor: pointer;"  alt="">
-                <p class="m-0" style="color:white">Clilck To Start Your First Link</p>
-        </div> -->
-  </div>
+</div>
+<div class="foter" style=" bottom: 0px;width: 100%;height: 100px;display: flex;align-items: center;gap:10px">
+    <p  class="m-0 foter-text" style="color:white">Click to start with your first link</p>
+    <img @click="$router.push({'name':'HomePage'})"  :src="require('../assets/images/logos/paris_teknoloji.png')" style=" width: 80px; cursor: pointer;"  alt="">
+</div>
+<!-- <div class="foter" style=" bottom: 0px;width: 100%;height: 130px;display: flex;flex-direction: column;background-color:#f6f6f6;">
+        <img @click="$router.push({'name':'HomePage'})"  :src="require('../assets/images/logos/paris teknoloji.png')" style=" width: 150px; cursor: pointer;background-color: rgb(230 230 230);border-radius: 10px;padding: 10px;"  alt="">
+</div> -->
+
+</div>
 </template>
 
 <script>
@@ -117,7 +122,15 @@ export default defineComponent({
 
     },
     computed:{
-        ...mapGetters(['get_protfolio_link'])
+        ...mapGetters(['get_protfolio_link']),
+        the_links(){
+            try{
+                return this.get_protfolio_link.slice().sort((g ,gg) => g.order - gg.order ) 
+            }
+            catch{
+                return []
+            }
+        }
     }
   });
   </script>
@@ -125,6 +138,7 @@ export default defineComponent({
 
 <style scoped>
 .body{
+    min-height: calc(100vh - 150px );
   background-color: #f6f6f6 ;
   height: 100%;
 }

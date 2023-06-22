@@ -11,6 +11,7 @@ import Protfolio from '../views/Protfolio.vue'
 import ForgotPassword from '../views/ForgotPassword.vue'
 import ResetPassword from '../views/ResetPassword.vue'
 import ActivateAcouunt from '../views/ActivateAcouunt.vue'
+import Dashbord from '../views/Dashbord.vue'
 import _404page from '../views/_404page.vue'
 
 const routes = [
@@ -68,6 +69,11 @@ const routes = [
     path: `/ForgotPassword`,
     name: 'ForgotPassword',
     component: ForgotPassword
+  },
+  {
+    path: `/Dashbord`,
+    name: 'Dashbord',
+    component: Dashbord
   },
   {
     path: `/activate-acouunt/:token`,

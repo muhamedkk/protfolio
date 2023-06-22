@@ -9,7 +9,7 @@
                src="../assets/images/logos/paris_teknoloji.png"  
                ></v-img>
                <h1 class="white-color pt-1">One link for all your links</h1>
-               <h5 class="white-color pt-1">Create your profile, add your links and share your Parisajans.Link</h5>
+               <h5 class="white-color pt-1 text-center">Create your profile, add your links and share your Parisajans.Link</h5>
                <a class="white-color pt-1">Parisajans.link/my-name</a>
                <div class="section-one-btns">
                 <v-btn  @click="this.$router.push({ name: 'SignUp' })"  prepend-icon="fa-solid fa-user-plus" variant="tonal">
@@ -383,11 +383,11 @@ font-size:medium ;
 
 }
 }
-@media only screen and (max-width: 576px){
+@media only screen and (max-width: 450px){
     
     .section-one h1{
         font-size: 22px !important;
-}
+    }
 .section-one h5{
     font-size: 12px !important;
 }
@@ -406,7 +406,13 @@ font-size:medium ;
 .custom-info-icon{
     padding: 5px;
 }
-
-
+}
+@media only screen and (max-width: 375px){
+    .section-one-btns{
+        flex-direction: column;
+    }
+    .hero{
+    padding: 15px;
+}
 }
 </style>

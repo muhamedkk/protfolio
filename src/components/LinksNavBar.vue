@@ -19,13 +19,13 @@
         </v-btn>
     </router-link>
 
-    <router-link  to="/Design" exact-active-class="active" active-class="active" class="nav_btn_link" >
+    <!-- <router-link  to="/Design" exact-active-class="active" active-class="active" class="nav_btn_link" >
         <v-btn value="3"  class="nav_btn">
             <div>
                 <i class="fa-solid fa-pen-nib"></i>
             </div>
         </v-btn>
-    </router-link>
+    </router-link> -->
 
     <router-link  to="/Share" exact-active-class="active" active-class="active" class="nav_btn_link" >
         <v-btn value="4"  class="nav_btn">

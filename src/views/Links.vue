@@ -6,7 +6,7 @@
       <div class="body">
         <div class="box">
             <!-- {{user_links}} -->
-            <div v-for="(group,i) in user_links" :key="i" class="groups">
+            <div v-for="(group,i) in the_links" :key="i" class="groups">
                 <div class="group-link">
                     <div class="group-header">
                         <div class="group-header-text">
@@ -16,6 +16,10 @@
                             <i class="fa-solid fa-pen" @click="this.edit_group = {
                                 id:group.id,show_titel:group.show_titel,is_active:group.is_active,titel:group.titel},group_type_request = 'EDIT'" data-bs-toggle="modal" data-bs-target="#add_group"></i>
                             <i class="fa-solid fa-trash" @click="this.group_delete_id = group.id" data-bs-toggle="modal" data-bs-target="#group_delete_modal"></i>
+                            <div class="d-flex flex-column gap-2">
+                                <i class="fa-solid fa-circle-up arrow" @click="move_group({type:'up',group_id:group.id})"></i>
+                                <i class="fa-solid fa-circle-down arrow" @click="move_group({type:'down',group_id:group.id})"></i>
+                            </div>
                         </div>
                     </div>
                     <div  v-for="(link,i) in group.link.sort((l ,ll) => l.order - ll.order )" :key="i"  class="link">
@@ -72,7 +76,12 @@
                                 </div>
                             </div>
                             <div class="contant d-flex align-items-center justify-content-between"  style="white-space: nowrap;overflow: hidden;text-overflow: ellipsis;flex-grow: 1;">
-                                <a :herf="link.link" class="m-0">{{link.link}}</a>
+                                <a :herf="link.link" class="m-0 " style="    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    flex-grow: 1;
+    max-width: 95%;
+">{{link.link}}</a>
                                 <div class="d-flex flex-column gap-2">
                                     <i class="fa-solid fa-circle-up arrow" @click="move_link({link_id:link.id,type:'up',group_id:group.id})"></i>
                                     <i class="fa-solid fa-circle-down arrow" @click="move_link({link_id:link.id,type:'down',group_id:group.id})"></i>
@@ -447,7 +456,7 @@
             if(this.validation()){
                 console.log(this.new_group)
                 var pyload = this.new_group
-                _axios.post('/api/create_group_links/',pyload,{ headers: {
+                _axios.post('/api/create_group_links',pyload,{ headers: {
                 'Authorization': `token ${window.localStorage.token}`}})
                 .then((response)=>{
                     console.log(response)
@@ -569,16 +578,36 @@
             }
         },
         move_link(payload){
-            console.log(payload)
+  
             _axios.post('/api/move_link',payload,{ headers: {
                 'Authorization': `token ${window.localStorage.token}`}})
             .then( ()=>{
-                console.log('asd')
                 this.$store.dispatch('get_my_links')
                 .then( ()  => {
                     this.get_data()
                 })
             } )
+        },
+        move_group(payload){
+            console.log(payload)
+            _axios.post("/api/move_group",payload,{ headers: {
+                'Authorization': `token ${window.localStorage.token}`}})
+            .then( () => {
+                this.$store.dispatch('get_my_links')
+                .then( ()  => {
+                    this.get_data()
+                })
+            } )
+        },
+      },
+      computed:{
+        the_links(){
+            try{
+                return this.user_links.slice().sort((g ,gg) => g.order - gg.order ) 
+            }
+            catch{
+                return []
+            }
         }
       },
       watch: {
@@ -642,6 +671,8 @@
 font-size: large;
 color: #f58634;
 cursor: pointer;
+display: flex;
+align-items: center;
 }
 .link{
     border-bottom: solid 1px rgba(0, 0, 0, 0.100);
@@ -768,7 +799,7 @@ cursor: pointer;
     font-size: 30px;
 }
 .arrow{
-    color:#2d274b;
+    color:#2d274b !important;
     cursor: pointer;
 }
 </style>
